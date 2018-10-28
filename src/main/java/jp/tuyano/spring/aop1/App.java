@@ -1,17 +1,18 @@
 package jp.tuyano.spring.aop1;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class App {
 	private static ApplicationContext app;
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes" })
 	public static void main(String[] args) {
-		app=new ClassPathXmlApplicationContext("bean.xml");
-		IMyBean<String>bean =(IMyBean<String>)app.getBean("bean1");
-		bean.appData("Hello AOP World!");
-		bean.appData("this is sample data.");
-		System.out.println(bean);
+		app=new AnnotationConfigApplicationContext(MyBeanConfig.class);
+		IMyBean bean1 =(IMyBean)app.getBean("bean1");
+		System.out.println(bean1);
+		IMyBean bean2 =(IMyBean)app.getBean("bean2");
+		bean2.appData("Hello AOP World!");
+		System.out.println(bean2);
 	}
 }
